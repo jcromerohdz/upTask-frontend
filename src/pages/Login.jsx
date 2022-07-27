@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Login = () => {
   return (
@@ -41,14 +42,26 @@ const Login = () => {
             className='w-full mt-3 p-3 border rounded-xl bg-gray-50'
           />
         </div>
-
         <input 
           type="submit" 
           value="Start Session"
           className='bg-sky-700 mb-5 w-full py-3 text-white uppercase font-bold rounded hover:cursor-pointer hover:bg-sky-800 transition-colors'
         />
       </form>
-      
+      <nav className="lg:flex lg:justify-between">
+        <Link
+          className='block text-center my-5 text-slate-500 uppercase text-sm hover:text-slate-800'
+          to='/register'
+        >
+          Don't have an account? Register
+        </Link>
+        <Link
+          className='block text-center my-5 text-slate-500 uppercase text-sm hover:text-slate-800'
+          to='/forgot-password'
+        >
+          Forgot My Password 
+        </Link>
+      </nav>
     </>
   )
 }
