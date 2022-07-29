@@ -1,6 +1,7 @@
 import React, { useState} from 'react'
 import {Link} from 'react-router-dom'
 import Alert from '../components/Alert'
+import axios from 'axios'
 
 const Register = () => {
   const [ name, setName ] = useState('')
@@ -9,8 +10,7 @@ const Register = () => {
   const [ repeatPassword, setRepeatPassword ] = useState('')
   const [ alertMsg, setAlertMsg ] = useState({})
 
-
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
 
     if([name, email, password, repeatPassword].includes('')){
@@ -19,6 +19,46 @@ const Register = () => {
         error: true
       })
       return
+    }
+
+    if(password !== repeatPassword) {
+      setAlertMsg({
+        msg: 'The passwords do not match',
+        error: true
+      })
+      return
+    }
+
+    if(password.length < 6) {
+      setAlertMsg({
+        msg: 'The password is to short or less then 6 characters',
+        error: true
+      })
+    }
+
+    setAlertMsg({})
+
+    // Create user via API
+    try {
+      const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users`, {
+        name, email, password
+      })
+      
+      setAlertMsg({
+        msg: data.msg,
+        error: false
+      })
+
+      setName('')
+      setEmail('')
+      setPassword('')
+      setRepeatPassword('')
+      
+    } catch (error) {
+      setAlertMsg({
+        msg: error.response.data.msg,
+        error: true
+      })
     }
   }
 
