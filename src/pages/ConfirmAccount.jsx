@@ -7,6 +7,7 @@ import Alert from '../components/Alert'
 const ConfirmAccount = () => {
 
   const [alertMsg, setAlertMsg] = useState({})
+  const [accountConfirmed, setAccountConfirmed] = useState(false)
 
   const params = useParams()
   const { id } = params
@@ -21,6 +22,8 @@ const ConfirmAccount = () => {
           msg: data.msg,
           error: false
         })
+
+        setAccountConfirmed(true)
        
       } catch (error) {
         setAlertMsg({
@@ -44,8 +47,15 @@ const ConfirmAccount = () => {
           projects
         </span>
       </h1>
-      <div>
+      <div className='mt-20 md:mt-10 shadow-lg px-5 py-10 rounded-xl'>
         {msg && <Alert alertMsg={alertMsg} />}
+
+        {accountConfirmed && (
+          <Link
+            className='block text-center my-5 text-slate-500 uppercase text-sm hover:text-slate-800'
+            to='/'
+          >Login</Link>
+        )}
       </div>
     </>
   )
